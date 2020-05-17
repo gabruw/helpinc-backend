@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpInc", "HelpInc\HelpInc.csproj", "{D216B3B4-E787-49BE-A5AE-55BAD9A1EAB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{58A2B528-C83A-441D-856C-28891A7AE559}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{92A8F05D-33CF-46F1-98C5-5205C5A8491D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D216B3B4-E787-49BE-A5AE-55BAD9A1EAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D216B3B4-E787-49BE-A5AE-55BAD9A1EAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D216B3B4-E787-49BE-A5AE-55BAD9A1EAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D216B3B4-E787-49BE-A5AE-55BAD9A1EAB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58A2B528-C83A-441D-856C-28891A7AE559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58A2B528-C83A-441D-856C-28891A7AE559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58A2B528-C83A-441D-856C-28891A7AE559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58A2B528-C83A-441D-856C-28891A7AE559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92A8F05D-33CF-46F1-98C5-5205C5A8491D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92A8F05D-33CF-46F1-98C5-5205C5A8491D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92A8F05D-33CF-46F1-98C5-5205C5A8491D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92A8F05D-33CF-46F1-98C5-5205C5A8491D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9BE2E798-7BD2-4735-98F9-514E125CD9E3}
+	EndGlobalSection
+EndGlobal
