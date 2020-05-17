@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Utils;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HelpInc
 {
@@ -32,6 +36,32 @@ namespace HelpInc
 
             // Identity
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<HelpIncContext>().AddDefaultTokenProviders();
+
+            // JWT
+            var jwtSettingsSection = Configuration.GetSection("JWTSettings");
+            services.Configure<JWTSettings>(jwtSettingsSection);
+
+            var jwtSettings = jwtSettingsSection.Get<JWTSettings>();
+            var key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
+
+            services.AddAuthentication(auth =>
+            {
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(jwt =>
+            {
+                jwt.SaveToken = true;
+                jwt.RequireHttpsMetadata = true;
+                jwt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.Sender,
+                    ValidAudience = jwtSettings.ValidURI,
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+            });
 
             // Scope's
             services.AddScoped<IAddressRepository, AddressRepository>();
