@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Utils;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HelpInc
 {
@@ -20,7 +24,6 @@ namespace HelpInc
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -32,6 +35,32 @@ namespace HelpInc
 
             // Identity
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<HelpIncContext>().AddDefaultTokenProviders();
+
+            // JWT
+            var jwtSettingsSection = Configuration.GetSection("JWTSettings");
+            services.Configure<JWTSettings>(jwtSettingsSection);
+
+            var jwtSettings = jwtSettingsSection.Get<JWTSettings>();
+            var key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
+
+            services.AddAuthentication(auth =>
+            {
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(jwt =>
+            {
+                jwt.SaveToken = true;
+                jwt.RequireHttpsMetadata = true;
+                jwt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.Sender,
+                    ValidAudience = jwtSettings.ValidURI,
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+            });
 
             // Scope's
             services.AddScoped<IAddressRepository, AddressRepository>();
@@ -45,7 +74,6 @@ namespace HelpInc
             services.AddScoped<ISkillLevelRepository, SkillLevelRepository>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
