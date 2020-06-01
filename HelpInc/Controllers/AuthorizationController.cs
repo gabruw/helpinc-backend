@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Domain.IRepository;
+using Domain.Entity;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace HelpInc.Controllers
 {
@@ -22,6 +25,24 @@ namespace HelpInc.Controllers
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult Login(long loginId, string type)
+        {
+            Company company = new Company();
+
+            switch (type)
+            {
+                case "Consumer":
+                    break;
+                case "Provider":
+                    break;
+                case "Company":
+                    company = _companyRepository.GetbyId(loginId);
+                    return RedirectToAction("Principal", company);
+            }
+
             return View();
         }
     }
