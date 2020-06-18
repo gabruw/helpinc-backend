@@ -31,11 +31,13 @@ namespace HelpInc.Controllers
         public IActionResult Login(long loginId, string type)
         {
             Company company = new Company();
+            Consumer consumer = new Consumer();
 
             switch (type)
             {
                 case "Consumer":
-                    break;
+                    consumer = _consumerRepository.GetbyId(loginId);
+                    return RedirectToAction("Principal", consumer);
                 case "Provider":
                     break;
                 case "Company":
