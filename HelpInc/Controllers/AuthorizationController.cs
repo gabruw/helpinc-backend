@@ -31,6 +31,7 @@ namespace HelpInc.Controllers
         public IActionResult Login(long loginId, string type)
         {
             Company company = new Company();
+            Provider provider = new Provider();
             Consumer consumer = new Consumer();
 
             switch (type)
@@ -39,7 +40,8 @@ namespace HelpInc.Controllers
                     consumer = _consumerRepository.GetbyId(loginId);
                     return RedirectToAction("Principal", consumer);
                 case "Provider":
-                    break;
+                    provider = _providerRepository.GetbyId(loginId);
+                    return RedirectToAction("Principal", provider);
                 case "Company":
                     company = _companyRepository.GetbyId(loginId);
                     return RedirectToAction("Principal", company);
